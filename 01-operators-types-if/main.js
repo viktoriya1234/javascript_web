@@ -33,7 +33,6 @@ let randomLabelAge =  Math.floor(Math.random() * LABEL_AGE.length);
 let userAge;
 userAge = prompt(LABEL_AGE[randomLabelAge]);
 
-// userAge = "frg"
 let message = '';
 
 if(isNaN(userAge)) {
