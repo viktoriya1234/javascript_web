@@ -11,6 +11,42 @@ const products = [
 
 ];
 
-let o = {
-    
+const users = [
+    {id:1, login: '1', password: '1', type:'registered'},
+    {id:2, login: '2', password: '2', type:'VIP'},
+    {id:3, login: '3', password: '3', type:'VIP'}
+]
+
+let userType = '';
+let userLogin;
+let userPassword;
+let user;
+
+function userVerification(login, password) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].login === login && users[i]['passwords'] === password);
+        return {login:users[i].login, type: users[i].type}
+    }
+
+    return {}
 }
+
+if ( confirm("Ви зареєстрований користувач?") ) {
+
+    userLogin = prompt('Введіть логін:')
+    userPassword = prompt('Введіть пароль:')
+
+    user = userVerification(userLogin, userPassword)
+    if (user.hasOwnProperty('login')) {
+        userType = user.type
+    }
+
+}
+
+console.log(userType)
+
+let content = "<div><header><h1>Funka</h1></header>"
+
+content += "</div>"
+
+document.body.innerHTML = content;
