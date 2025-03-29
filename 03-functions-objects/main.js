@@ -12,22 +12,21 @@ const products = [
 ];
 
 const users = [
-    {id:1, login: '1', password: '1', type:'registered'},
-    {id:2, login: '2', password: '2', type:'VIP'},
-    {id:3, login: '3', password: '3', type:'VIP'}
+    {id:1, login: '1', password: '1', type:'registered', sale:4},
+    {id:2, login: '2', password: '2', type:'VIP', sale:20},
+    {id:3, login: '3', password: '3', type:'VIP', sale:20}
 ]
 
 let userType = '';
 let userLogin;
 let userPassword;
-let user;
+let user =  {};
 
 function userVerification(login, password) {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].login === login && users[i]['passwords'] === password);
-        return {login:users[i].login, type: users[i].type}
-    }
-
+    for (let i = 0; i < users.length; i++)
+        if (users[i].login === login && users[i]['password'] === password)
+            return users[i];
+                
     return {}
 }
 
@@ -43,10 +42,44 @@ if ( confirm("Ви зареєстрований користувач?") ) {
 
 }
 
-console.log(userType)
+function pDiv(img, name, price){
+    return "<div><img src='images/" 
+        + img + "'><p>"
+        + name + "</p><p>"
+        + Math.round(price) + "</p></div>";
+    
+}
 
-let content = "<div><header><h1>Funka</h1></header>"
+// повертає рядок, продукт для зареєстрованих,фбо пустий якщо товар vip і користувач не зареєстрований
+function addProduct(product) {
+    console.log(product)
 
-content += "</div>"
+    if(user.hasOwnProperty('login')){
+        if (user.type === 'VIP'){
+           return pDiv(product.img, product.name, ((1 - user.sale/100) * product.price))
+
+        } else if (product.type !== 'VIP'){
+            return pDiv(product.img, product.name, ((1 - user.sale/100) * product.price))
+        }
+    } else {
+        if (product.type !== 'VIP')
+            return pDiv(product.img, product.name, product.price)
+    }
+
+    return ''
+}
+
+console.log(user)
+
+let content = "<div><header><h1>Funka</h1></header><main>"
+let div = ''
+
+
+for(let i = 0; i < products.length; i++ ) {    
+    console.log(products[i])
+    div += addProduct(products[i])
+}
+
+content += div + "</main>"
 
 document.body.innerHTML = content;
