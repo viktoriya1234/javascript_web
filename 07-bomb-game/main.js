@@ -18,9 +18,21 @@ let bombs = [
     30, 31, 32, 33, 34, 35, 36, 37, 38, 39
 ]
 
-for (let i = 0; i < bombs.length; i ++) [
-    gridDivs[bombs[i]].classList.add('bomb')
-]
+let bombsRemoved = []
+
+function drawBombs(bombsList){
+    for (let i = 0; i < bombsList.length; i ++) {
+        if(!bombsRemoved.includes(i))
+            gridDivs[bombsList[i]].classList.add('bomb')
+    }
+}
+drawBombs(bombs)
+
+function removeBombs(bombsList){
+    for (let i = 0; i < bombsList.length; i ++) {
+        gridDivs[bombsList[i]].classList.remove('bomb')
+    }
+}
 
 let shooterIndex = 217;
 gridDivs[shooterIndex].classList.add('shooter')
@@ -57,19 +69,64 @@ function shoot(event) {
 
         if(gridDivs[currentshootIndex].classList.contains('bomb')){
             gridDivs[currentshootIndex].classList.remove('bomb')
-            gridDivs[currentshootIndex].classList.remove('explosion.png')
-            
+            gridDivs[currentshootIndex].classList.add('explosion.png')         
+
+            bombsRemoved.push(bombs.indexOf(currentshootIndex))   
+            clearInterval(setIntervalIndex)  
+        } else{
+            gridDivs[currentshootIndex].classList.add('shoot')
         }
-
-        console.log(setIntervalIndex)
-
-        gridDivs[currentshootIndex].classList.add('shoot')
+       
     }
 
     if(event.code == "Space"){
         setIntervalIndex = setInterval(moveShoot, 100)
     }
 }
+let xStep = 1
+let yStep = 0
+let directionRight = true
+
+function moveBombs(bombsList){
+    removeBombs(bombsList)
+
+    yStep = 0
+    if(directionRight &&
+         bombsList[bombsList.length-1] % gridWidth 
+            == gridWidth - 1)
+    {
+        directionRight = false
+        xStep = -1
+        yStep = gridWidth
+    }
+
+    if(!directionRight &&
+        bombsList[0] % gridWidth == 0)
+    {
+       directionRight = true
+       xStep = 1
+       yStep = gridWidth
+    }
+
+
+    for(let i = 0; i < bombsList.length; i++){
+        console.log(i)
+        bombsList[i] += xStep + yStep 
+    }
+
+    drawBombs(bombsList);
+
+    if(bombsList.length === bombsRemoved.length ){
+        document.getElementById('main-el').classList.add('win')
+        clearInterval(gameLoopId);
+    }
+    if(bombsList[bombsList.length-1] > 210){
+        document.getElementById('main-el').classList.add('game-over')
+        clearInterval(gameLoopId);
+    }
+}
+
+let gameLoopId = setInterval(moveBombs, 500, bombs )
 
 document.addEventListener('keydown', moveShooter)
 document.addEventListener('keydown', shoot)
