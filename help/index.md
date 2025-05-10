@@ -10,7 +10,7 @@
 6. [Події в JavaScript](06-events/help.md)
 7. [Гра аркада](07-shooter-game/help.md)
 8. [Власна гра](08-quizizz-own-game/help.md)
-9.
+9. [Canvas в html5](09-canvas/help.md)
 
 <br>
 
