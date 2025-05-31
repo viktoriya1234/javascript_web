@@ -25,33 +25,32 @@ canvas.addEventListener('mousemove', function(event){
 });
 
 class Player {
+    static heroImg = new Image()
+    static runLeftImg = new Image()
+    static runRightImg = new Image()
+
+    static loadImages(){
+         Player.heroImg.src = imgFolder + 'idle_hero.png'
+         Player.runLeftImg.src = imgFolder + 'run_left.png'
+         Player.runRightImg.src = imgFolder + 'run_right.png'
+    }
+
     constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
-
-        this.heroImg = new Image()
-        this.heroImg.src = imgFolder + 'idle_hero.png'
         this.heroMaxFrame = 17
-        //left
-        this.runLeftImg = new Image()
-        this.runLeftImg.src = imgFolder + 'run_left.png'
-        //right
-        this.runRightImg = new Image()
-        this.runRightImg.src = imgFolder + 'run_right.png'
-
         this.runMaxFrame = 8
-
         this.xFrame = 0
         this.sWidth = 43
         this.sHeight = 50
         this.takt = 7
-        this.speed = 10
+        this.speed = 1
 
     }
-    stay(){
-        console.log(mouse, this.xFrame)
+    drawImg(img, maxFrame){
+         console.log(mouse, this.xFrame)
         ctx.drawImage(
-            this.heroImg,
+            img,
             this.sWidth * this.xFrame,
             0,
             this.sWidth,
@@ -62,18 +61,19 @@ class Player {
             this.sHeight 
         )
         if (gameFrame % this.takt === 0){
-            if(this.xFrame > this.heroMaxFrame - 2){
-                this.xFrame = 0
-            }else {
-                this.xFrame++;
-            }
+            this.xFrame = (this.xFrame + 1) % maxFrame
         }
     }
-    runLeft(){
 
+
+    stay() {
+        this.drawImg(player.heroImg, this.heroMaxFrame)
     }
-    runRight(){
-
+    runLeft() {
+        this.drawImg(player.runLeftImg, this.heroMaxFrame)
+    }
+    runRight() {
+        this.drawImg(player.runRightImg, this.heroMaxFrame)
     }
     update(){
 
