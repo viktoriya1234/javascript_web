@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Press+Start+2P&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-image: linear-gradient(to right,
+     #152672 0%,#4171b9 51%,#152672 100% );
+}
+
+header{
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    background-image: url("../img/main_back.png");
+    background-repeat: no-repeat;
+    background-position: top 50px left 50px;
+    margin-right: 80px;
+}
+
+h1{
+    font-family:'Oswald', sans-serif;
+    font-size: 60px;
+    color: white;
+    padding: 30px;
+}
+
+.menuContainer{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 80px;
+    height: 100px;
+    background-color: rgb(74, 74, 180);
+    z-index: 10;
+}
+
+.menuTrigger {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuTriggerLines {
+    width: 40px;
+    height: 3px;
+    background-color: rgb(253, 125, 86);
+    position: relative;
+}
+
+.menuTriggerLines::before,
+.menuTriggerLines::after {
+    content: '';
+    width: 40px;
+    height: 3px;
+    position: absolute;
+    right: 0px;
+    background-color: rgb(253, 125, 86);;
+}
+
+.menuTriggerLines::before{top: -10px;}
+.menuTriggerLines::after{top: 10px;}
+
+header nav {
+    display: none;
+}
